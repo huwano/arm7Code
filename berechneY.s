@@ -92,13 +92,13 @@ berechnung
 uitoa
 					STMFD SP!, {R2-R7, LR}   ; Save registers
 					MOV   R2, #10            ; Base (10) for division
-					LDR   R3, =0x1999A       ; Magic number for division by 10 (16-bit optimization)
+					LDR   R3, =0x199A       ; Magic number for division by 10 (16-bit optimization)
 					MOV   R4, #0             ; Digit count
 
 schleife
 					CMP   R0, #0             ; Check if the number is zero
 					UMULLNE R6, R5, R0, R3     ; Multiply with the magic number
-					MOVNE   R5, R6, LSR #20    ; Adjust quotient (shift right by 20 for 16-bit precision)
+					MOVNE   R5, R6, LSR #16    ; Adjust quotient (shift right by 16 for 16-bit precision)
 					MULNE   R6, R5, R2         ; R6 = R5 * 10
 					SUBNE   R6, R0, R6         ; R6 = R0 - (R5 * 10), gives remainder
 					ADDNE   R6, #0x30          ; Convert remainder to ASCII ('0'-'9')
